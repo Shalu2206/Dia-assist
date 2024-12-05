@@ -7,8 +7,15 @@
     <list default="true" id="6a68e786-fb03-44d3-8daa-7d9d381bb8b1" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/dia_assist/lib/themes/colors_theme.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/dia_assist/lib/themes/text_theme.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Dia-assist.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dia_assist/.metadata" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/.metadata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dia_assist/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/android/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dia_assist/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dia_assist/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dia_assist/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +24,13 @@
   </component>
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -31,6 +45,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Flutter.main.dart.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
@@ -38,17 +53,36 @@
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "shal",
+    "io.flutter.reload.alreadyRun": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Dell1/Documents/GitHub/Dia-assist/dia_assist/lib/themes",
-    "settings.editor.selected.configurable": "dart.settings",
+    "last_opened_file_path": "C:/Users/Dell1/Documents/GitHub/Dia-assist/dia_assist/assets/images",
+    "settings.editor.selected.configurable": "flutter.settings",
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Dell1\Documents\GitHub\Dia-assist\dia_assist\assets\images" />
+      <recent name="C:\Users\Dell1\Documents\GitHub\Dia-assist\dia_assist\assets" />
       <recent name="C:\Users\Dell1\Documents\GitHub\Dia-assist\dia_assist\lib\themes" />
       <recent name="C:\Users\Dell1\Documents\GitHub\Dia-assist" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Dell1\Documents\GitHub\Dia-assist\dia_assist\lib\controllers" />
+      <recent name="C:\Users\Dell1\Documents\GitHub\Dia-assist\dia_assist\assets\images" />
+      <recent name="C:\Users\Dell1\Documents\GitHub\Dia-assist\dia_assist" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/dia_assist/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Flutter.main.dart" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
