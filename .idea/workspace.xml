@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a68e786-fb03-44d3-8daa-7d9d381bb8b1" name="Changes" comment="">
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dia_assist/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dia_assist/lib/pages/about_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/lib/pages/home/about_screen.dart" afterDir="false" />
@@ -12,6 +13,10 @@
       <change beforePath="$PROJECT_DIR$/dia_assist/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dia_assist/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/pubspec.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dia_assist/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/test/widget_test.dart" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +36,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="shal" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -53,7 +58,11 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
+<<<<<<< Updated upstream
     "git-widget-placeholder": "ashok",
+=======
+    "git-widget-placeholder": "shal",
+>>>>>>> Stashed changes
     "io.flutter.reload.alreadyRun": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Dell1/Documents/GitHub/Dia-assist/dia_assist/assets/images",
