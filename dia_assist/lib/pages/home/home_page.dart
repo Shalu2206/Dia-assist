@@ -43,108 +43,120 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: FadeTransition(
-                opacity: homeController.logoAnimationController,
-                child: Container(
-                  height: 250,
-                  decoration: BoxDecoration(
-                    color: Colors.blueAccent,
-                    borderRadius: BorderRadius.circular(10),
-                    image: const DecorationImage(
-                      image: AssetImage('assets/images/logo.webp'),
-                      fit: BoxFit.cover,
+      body: Container(
+        decoration:const  BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.black,
+              Color(0xFF400D0D8A),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: FadeTransition(
+                  opacity: homeController.logoAnimationController,
+                  child: Container(
+                    height: 250,
+                    decoration: BoxDecoration(
+                      color: Colors.blueAccent,
+                      borderRadius: BorderRadius.circular(10),
+                      image: const DecorationImage(
+                        image: AssetImage('assets/images/logo.webp'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
 
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: List.generate(5, (index) {
-                  return AnimatedBuilder(
-                    animation: homeController.listItemControllers[index],
-                    builder: (context, child) {
-                      return ScaleTransition(
-                        scale: Tween<double>(begin: 0.5, end: 1.0)
-                            .animate(CurvedAnimation(
-                          parent: homeController.listItemControllers[index],
-                          curve: Curves.bounceOut,
-                        )),
-                        child: Card(
-                          elevation: 5,
-                          margin: const EdgeInsets.symmetric(vertical: 10),
-                          child: ListTile(
-                            title: Text(
-                              [
-                                'Dia-predict',
-                                'Dia-Medicate',
-                                'Previously recorded data',
-                                'Dia-Chat',
-                                'About'
-                              ][index],
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: List.generate(5, (index) {
+                    return AnimatedBuilder(
+                      animation: homeController.listItemControllers[index],
+                      builder: (context, child) {
+                        return ScaleTransition(
+                          scale: Tween<double>(begin: 0.5, end: 1.0)
+                              .animate(CurvedAnimation(
+                            parent: homeController.listItemControllers[index],
+                            curve: Curves.bounceOut,
+                          )),
+                          child: Card(
+                            elevation: 5,
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            child: ListTile(
+                              title: Text(
+                                [
+                                  'Dia-predict',
+                                  'Dia-Medicate',
+                                  'Previously recorded data',
+                                  'Dia-Chat',
+                                  'About'
+                                ][index],
+                              ),
+                              trailing: const Icon(Icons.arrow_forward),
+                              onTap: () {
+                                switch (index) {
+                                  case 0:
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => PredictionScreenDisplay(),
+                                      ),
+                                    );
+                                    break;
+                                  case 1:
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const MedicateScreen(),
+                                      ),
+                                    );
+                                    break;
+                                  case 2:
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                        const RecordedDataScreen(),
+                                      ),
+                                    );
+                                    break;
+                                  case 3:
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const ChatScreen(),
+                                      ),
+                                    );
+                                    break;
+                                  case 4:
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const AboutScreen(), // This should work now
+                                      ),
+                                    );
+                                    break;
+                                }
+                              },
                             ),
-                            trailing: const Icon(Icons.arrow_forward),
-                            onTap: () {
-                              switch (index) {
-                                case 0:
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => PredictionScreenDisplay(),
-                                    ),
-                                  );
-                                  break;
-                                case 1:
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const MedicateScreen(),
-                                    ),
-                                  );
-                                  break;
-                                case 2:
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                      const RecordedDataScreen(),
-                                    ),
-                                  );
-                                  break;
-                                case 3:
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const ChatScreen(),
-                                    ),
-                                  );
-                                  break;
-                                case 4:
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const AboutScreen(), // This should work now
-                                    ),
-                                  );
-                                  break;
-                              }
-                            },
                           ),
-                        ),
-                      );
-                    },
-                  );
-                }),
+                        );
+                      },
+                    );
+                  }),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
