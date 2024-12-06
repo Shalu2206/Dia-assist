@@ -27,6 +27,8 @@ class AppColors {
 /// Create a color scheme using the custom colors.
 final  ColorScheme appColorScheme = ColorScheme(
   primary: AppColors.primary,
+  background: AppColors.background,
+  onBackground: Colors.black,
   primaryContainer: AppColors.primaryVariant,
   secondary: AppColors.secondary,
   secondaryContainer: AppColors.secondaryVariant,

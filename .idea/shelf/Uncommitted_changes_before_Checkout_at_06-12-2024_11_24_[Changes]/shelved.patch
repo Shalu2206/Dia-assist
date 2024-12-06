@@ -1,0 +1,367 @@
+Index: dia_assist/lib/pages/home/home_page.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'package:flutter/material.dart';\r\nimport 'package:get/get.dart';\r\nimport '../../controllers/home_controller.dart';\r\nimport '../prediction_page/Screens/prediction_screen_display.dart';\r\nimport 'about_screen.dart';\r\n\r\nclass HomePage extends StatefulWidget {\r\n  const HomePage({Key? key}) : super(key: key);\r\n\r\n  @override\r\n  _HomePageState createState() => _HomePageState();\r\n}\r\n\r\nclass _HomePageState extends State<HomePage> with TickerProviderStateMixin {\r\n  late HomeController homeController;\r\n\r\n  @override\r\n  void initState() {\r\n    super.initState();\r\n    homeController = Get.put(HomeController(vsync: this));\r\n  }\r\n\r\n  @override\r\n  void dispose() {\r\n    homeController.onClose();\r\n    super.dispose();\r\n  }\r\n\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    return Scaffold(\r\n      backgroundColor: const Color(0XFFD2F5F2),\r\n      appBar: AppBar(\r\n        backgroundColor: const Color(0XFF31F0E0),\r\n        title: const Text('DIA-ASSIST', style: TextStyle(fontSize: 24)),\r\n        actions: [\r\n          IconButton(\r\n            icon: const Icon(Icons.notifications),\r\n            onPressed: () {},\r\n          ),\r\n          IconButton(\r\n            icon: const Icon(Icons.settings),\r\n            onPressed: () {},\r\n          ),\r\n        ],\r\n      ),\r\n      body: SingleChildScrollView(\r\n        child: Column(\r\n          children: [\r\n            Padding(\r\n              padding: const EdgeInsets.all(15.0),\r\n              child: FadeTransition(\r\n                opacity: homeController.logoAnimationController,\r\n                child: Container(\r\n                  height: 250,\r\n                  decoration: BoxDecoration(\r\n                    color: Colors.blueAccent,\r\n                    borderRadius: BorderRadius.circular(10),\r\n                    image: const DecorationImage(\r\n                      image: AssetImage('assets/images/logo.webp'),\r\n                      fit: BoxFit.cover,\r\n                    ),\r\n                  ),\r\n                ),\r\n              ),\r\n            ),\r\n\r\n            Padding(\r\n              padding: const EdgeInsets.all(16),\r\n              child: Column(\r\n                children: List.generate(5, (index) {\r\n                  return AnimatedBuilder(\r\n                    animation: homeController.listItemControllers[index],\r\n                    builder: (context, child) {\r\n                      return ScaleTransition(\r\n                        scale: Tween<double>(begin: 0.5, end: 1.0)\r\n                            .animate(CurvedAnimation(\r\n                          parent: homeController.listItemControllers[index],\r\n                          curve: Curves.bounceOut,\r\n                        )),\r\n                        child: Card(\r\n                          elevation: 5,\r\n                          margin: const EdgeInsets.symmetric(vertical: 10),\r\n                          child: ListTile(\r\n                            title: Text(\r\n                              [\r\n                                'Dia-predict',\r\n                                'Dia-Medicate',\r\n                                'Previously recorded data',\r\n                                'Dia-Chat',\r\n                                'About'\r\n                              ][index],\r\n                            ),\r\n                            trailing: const Icon(Icons.arrow_forward),\r\n                            onTap: () {\r\n                              switch (index) {\r\n                                case 0:\r\n                                  Navigator.push(\r\n                                    context,\r\n                                    MaterialPageRoute(\r\n                                      builder: (context) => PredictionScreenDisplay(),\r\n                                    ),\r\n                                  );\r\n                                  break;\r\n                                case 1:\r\n                                  Navigator.push(\r\n                                    context,\r\n                                    MaterialPageRoute(\r\n                                      builder: (context) => const MedicateScreen(),\r\n                                    ),\r\n                                  );\r\n                                  break;\r\n                                case 2:\r\n                                  Navigator.push(\r\n                                    context,\r\n                                    MaterialPageRoute(\r\n                                      builder: (context) =>\r\n                                      const RecordedDataScreen(),\r\n                                    ),\r\n                                  );\r\n                                  break;\r\n                                case 3:\r\n                                  Navigator.push(\r\n                                    context,\r\n                                    MaterialPageRoute(\r\n                                      builder: (context) => const ChatScreen(),\r\n                                    ),\r\n                                  );\r\n                                  break;\r\n                                case 4:\r\n                                  Navigator.push(\r\n                                    context,\r\n                                    MaterialPageRoute(\r\n                                      builder: (context) => const AboutScreen(), // This should work now\r\n                                    ),\r\n                                  );\r\n                                  break;\r\n                              }\r\n                            },\r\n                          ),\r\n                        ),\r\n                      );\r\n                    },\r\n                  );\r\n                }),\r\n              ),\r\n            ),\r\n          ],\r\n        ),\r\n      ),\r\n    );\r\n  }\r\n}\r\n\r\nclass MedicateScreen extends StatelessWidget {\r\n  const MedicateScreen({Key? key}) : super(key: key);\r\n\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    return Scaffold(\r\n      appBar: AppBar(\r\n        title: const Text('Dia-Medicate'),\r\n      ),\r\n      body: Center(\r\n        child: const Text('Medication functionality goes here'),\r\n      ),\r\n    );\r\n  }\r\n}\r\n\r\nclass RecordedDataScreen extends StatelessWidget {\r\n  const RecordedDataScreen({Key? key}) : super(key: key);\r\n\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    return Scaffold(\r\n      appBar: AppBar(\r\n        title: const Text('Previously Recorded Data'),\r\n      ),\r\n      body: Center(\r\n        child: const Text('Recorded data functionality goes here'),\r\n      ),\r\n    );\r\n  }\r\n}\r\n\r\nclass ChatScreen extends StatelessWidget {\r\n  const ChatScreen({Key? key}) : super(key: key);\r\n\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    return Scaffold(\r\n      appBar: AppBar(\r\n        title: const Text('Dia-Chat'),\r\n      ),\r\n      body: Center(\r\n        child: const Text('Chat functionality goes here'),\r\n      ),\r\n    );\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/dia_assist/lib/pages/home/home_page.dart b/dia_assist/lib/pages/home/home_page.dart
+--- a/dia_assist/lib/pages/home/home_page.dart	(revision 441d382df9233d286cf2eb2ea7933b10aae6ee54)
++++ b/dia_assist/lib/pages/home/home_page.dart	(date 1733464359233)
+@@ -29,7 +29,6 @@
+   @override
+   Widget build(BuildContext context) {
+     return Scaffold(
+-      backgroundColor: const Color(0XFFD2F5F2),
+       appBar: AppBar(
+         backgroundColor: const Color(0XFF31F0E0),
+         title: const Text('DIA-ASSIST', style: TextStyle(fontSize: 24)),
+Index: dia_assist/lib/pages/prediction_page/Screens/prediction_screen_display.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'package:flutter/material.dart';\r\nimport 'package:get/get.dart';\r\nimport 'package:google_fonts/google_fonts.dart';\r\nimport '../../../controllers/login_controller.dart';\r\nimport '../../../themes/colors_theme.dart';\r\n\r\nclass PredictionScreenDisplay extends GetView<LoginController> {\r\n  // Declare the TextEditingController for each input field\r\n  final TextEditingController ageController = TextEditingController();\r\n  final TextEditingController bmiController = TextEditingController();\r\n  final TextEditingController hba1cController = TextEditingController();\r\n  final TextEditingController glucoseController = TextEditingController();\r\n  final TextEditingController weightController = TextEditingController();\r\n\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    // Shadow decoration for all inputs\r\n    BoxDecoration inputBoxShadow = BoxDecoration(\r\n      borderRadius: BorderRadius.circular(12),\r\n      color: Colors.white,\r\n      boxShadow: [\r\n        BoxShadow(\r\n          color: Colors.black.withOpacity(0.1), // Shadow color\r\n          blurRadius: 6, // Blur intensity\r\n          offset: Offset(0, 3), // Offset of the shadow\r\n        ),\r\n      ],\r\n    );\r\n\r\n    return Scaffold(\r\n      appBar: AppBar(\r\n        leading: GestureDetector(\r\n            onTap: (){\r\n              Get.back();\r\n            },\r\n            child: const Icon(Icons.arrow_back, color: Colors.white)),\r\n        backgroundColor: AppColors.primary,\r\n        title: Text(\r\n          'Diabetics Prediction',\r\n          style: Theme.of(context)\r\n              .textTheme\r\n              .headlineSmall\r\n              ?.copyWith(color: AppColors.background),\r\n        ),\r\n      ),\r\n      body: Container(\r\n        decoration:const  BoxDecoration(\r\n          gradient: LinearGradient(\r\n            colors: [\r\n              Color(0xff010129d3),\r\n              Color(0xFF400D0D8A),\r\n            ],\r\n            begin: Alignment.topCenter,\r\n            end: Alignment.bottomCenter,\r\n          ),\r\n        ),\r\n        child: Padding(\r\n          padding: const EdgeInsets.all(16),\r\n          child: SingleChildScrollView(\r\n            child: Column(\r\n              crossAxisAlignment: CrossAxisAlignment.start,\r\n              children: [\r\n                Center(\r\n                  child: Text(\r\n                    'Fill the required data',\r\n                    style: Theme.of(context).textTheme.titleLarge,\r\n                  ),\r\n                ),\r\n                SizedBox(height: 20),\r\n                Text('Gender', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primary)),\r\n                SizedBox(height: 8),\r\n                Obx(() => Container(\r\n                  decoration: inputBoxShadow, // Add shadow decoration\r\n                  child: DropdownButtonFormField<String>(\r\n                    decoration: InputDecoration(\r\n                      border: OutlineInputBorder(\r\n                        borderRadius: BorderRadius.circular(12),\r\n                        borderSide: BorderSide.none, // Hide the default border\r\n                      ),\r\n                      filled: true,\r\n                      fillColor: Colors.white,\r\n                    ),\r\n                    items: ['Male', 'Female']\r\n                        .map((gender) => DropdownMenuItem(\r\n                      value: gender,\r\n                      child: Text(gender),\r\n                    ))\r\n                        .toList(),\r\n                    value: controller.selectedGender.value.isEmpty\r\n                        ? null\r\n                        : controller.selectedGender.value,\r\n                    onChanged: (value) {\r\n                      controller.selectedGender.value = value!;\r\n                    },\r\n                  ),\r\n                )),\r\n                SizedBox(height: 20),\r\n                Text('Age', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primary)),\r\n                Container(\r\n                  decoration: inputBoxShadow, // Add shadow decoration\r\n                  child: TextFormField(\r\n                    controller: ageController, // Assign the controller\r\n                    keyboardType: TextInputType.number, // Only numeric input\r\n                    decoration: InputDecoration(\r\n                      border: OutlineInputBorder(\r\n                        borderRadius: BorderRadius.circular(12),\r\n                        borderSide: BorderSide.none, // Hide the default border\r\n                      ),\r\n                      filled: true,\r\n                      fillColor: Colors.white,\r\n                    ),\r\n                  ),\r\n                ),\r\n                SizedBox(height: 20),\r\n                Text('Hypertension', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primary)),\r\n                SizedBox(height: 8),\r\n                Obx(() => Container(\r\n                  decoration: inputBoxShadow, // Add shadow decoration\r\n                  child: DropdownButtonFormField<String>(\r\n                    decoration: InputDecoration(\r\n                      border: OutlineInputBorder(\r\n                        borderRadius: BorderRadius.circular(12),\r\n                        borderSide: BorderSide.none, // Hide the default border\r\n                      ),\r\n                      filled: true,\r\n                      fillColor: Colors.white,\r\n                    ),\r\n                    items: ['Yes', 'No']\r\n                        .map((tension) => DropdownMenuItem(\r\n                      value: tension,\r\n                      child: Text(tension),\r\n                    ))\r\n                        .toList(),\r\n                    value: controller.selectedTension.value.isEmpty\r\n                        ? null\r\n                        : controller.selectedTension.value,\r\n                    onChanged: (value) {\r\n                      controller.selectedTension.value = value!;\r\n                    },\r\n                  ),\r\n                )),\r\n                SizedBox(height: 20),\r\n                Text('Smoking History', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primary)),\r\n                SizedBox(height: 8),\r\n                Obx(() => Container(\r\n                  decoration: inputBoxShadow, // Add shadow decoration\r\n                  child: DropdownButtonFormField<String>(\r\n                    decoration: InputDecoration(\r\n                      border: OutlineInputBorder(\r\n                        borderRadius: BorderRadius.circular(12),\r\n                        borderSide: BorderSide.none, // Hide the default border\r\n                      ),\r\n                      filled: true,\r\n                      fillColor: Colors.white,\r\n                    ),\r\n                    items: ['Never', 'No Info', 'Current']\r\n                        .map((smoking) => DropdownMenuItem(\r\n                      value: smoking,\r\n                      child: Text(smoking),\r\n                    ))\r\n                        .toList(),\r\n                    value: controller.selectedSmoking.value.isEmpty\r\n                        ? null\r\n                        : controller.selectedSmoking.value,\r\n                    onChanged: (value) {\r\n                      controller.selectedSmoking.value = value!;\r\n                    },\r\n                  ),\r\n                )),\r\n                SizedBox(height: 20),\r\n                Text('Heart Disease', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primary)),\r\n                SizedBox(height: 8),\r\n                Obx(() => Container(\r\n                  decoration: inputBoxShadow, // Add shadow decoration\r\n                  child: DropdownButtonFormField<String>(\r\n                    decoration: InputDecoration(\r\n                      border: OutlineInputBorder(\r\n                        borderRadius: BorderRadius.circular(12),\r\n                        borderSide: BorderSide.none, // Hide the default border\r\n                      ),\r\n                      filled: true,\r\n                      fillColor: Colors.white,\r\n                    ),\r\n                    items: ['Yes', 'No']\r\n                        .map((disease) => DropdownMenuItem(\r\n                      value: disease,\r\n                      child: Text(disease),\r\n                    ))\r\n                        .toList(),\r\n                    value: controller.selectedDisease.value.isEmpty\r\n                        ? null\r\n                        : controller.selectedDisease.value,\r\n                    onChanged: (value) {\r\n                      controller.selectedDisease.value = value!;\r\n                    },\r\n                  ),\r\n                )),\r\n                SizedBox(height: 20),\r\n                Text('BMI', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primary)),\r\n                Container(\r\n                  decoration: inputBoxShadow, // Add shadow decoration\r\n                  child: TextFormField(\r\n                    controller: bmiController, // Assign the controller\r\n                    keyboardType: TextInputType.number, // Only numeric input\r\n                    decoration: InputDecoration(\r\n                      border: OutlineInputBorder(\r\n                        borderRadius: BorderRadius.circular(12),\r\n                        borderSide: BorderSide.none, // Hide the default border\r\n                      ),\r\n                      filled: true,\r\n                      fillColor: Colors.white,\r\n                    ),\r\n                  ),\r\n                ),\r\n                SizedBox(height: 20),\r\n                Text('HBA1C', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primary)),\r\n                Container(\r\n                  decoration: inputBoxShadow, // Add shadow decoration\r\n                  child: TextFormField(\r\n                    controller: hba1cController, // Assign the controller\r\n                    keyboardType: TextInputType.number, // Only numeric input\r\n                    decoration: InputDecoration(\r\n                      border: OutlineInputBorder(\r\n                        borderRadius: BorderRadius.circular(12),\r\n                        borderSide: BorderSide.none, // Hide the default border\r\n                      ),\r\n                      filled: true,\r\n                      fillColor: Colors.white,\r\n                    ),\r\n                  ),\r\n                ),\r\n                SizedBox(height: 20),\r\n                Text('Blood Glucose Level', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primary)),\r\n                Container(\r\n                  decoration: inputBoxShadow, // Add shadow decoration\r\n                  child: TextFormField(\r\n                    controller: glucoseController, // Assign the controller\r\n                    keyboardType: TextInputType.number, // Only numeric input\r\n                    decoration: InputDecoration(\r\n                      border: OutlineInputBorder(\r\n                        borderRadius: BorderRadius.circular(12),\r\n                        borderSide: BorderSide.none, // Hide the default border\r\n                      ),\r\n                      filled: true,\r\n                      fillColor: Colors.white,\r\n                    ),\r\n                  ),\r\n                ),\r\n                SizedBox(height: 20),\r\n                Text('Weight (in KG)', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primary)),\r\n                Container(\r\n                  decoration: inputBoxShadow, // Add shadow decoration\r\n                  child: TextFormField(\r\n                    controller: weightController, // Assign the controller\r\n                    keyboardType: TextInputType.number, // Only numeric input\r\n                    decoration: InputDecoration(\r\n                      border: OutlineInputBorder(\r\n                        borderRadius: BorderRadius.circular(12),\r\n                        borderSide: BorderSide.none, // Hide the default border\r\n                      ),\r\n                      filled: true,\r\n                      fillColor: Colors.white,\r\n                    ),\r\n                  ),\r\n                ),\r\n                SizedBox(height: 20),\r\n                 SizedBox(\r\n                  height: 50,\r\n                  width: double.infinity,\r\n                  child: ElevatedButton(\r\n                    onPressed: () {\r\n                    },\r\n                    style: ElevatedButton.styleFrom(\r\n                      elevation: 10,\r\n                      backgroundColor: AppColors.primary,\r\n                    ),\r\n                    child: Text(\r\n                      'Submit',\r\n                      style: GoogleFonts.openSans(color: Colors.white, fontSize: 18),\r\n                    ),\r\n                  ),\r\n                ),\r\n              ],\r\n            ),\r\n          ),\r\n        ),\r\n      ),\r\n    );\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/dia_assist/lib/pages/prediction_page/Screens/prediction_screen_display.dart b/dia_assist/lib/pages/prediction_page/Screens/prediction_screen_display.dart
+--- a/dia_assist/lib/pages/prediction_page/Screens/prediction_screen_display.dart	(revision 441d382df9233d286cf2eb2ea7933b10aae6ee54)
++++ b/dia_assist/lib/pages/prediction_page/Screens/prediction_screen_display.dart	(date 1733464359249)
+@@ -5,7 +5,6 @@
+ import '../../../themes/colors_theme.dart';
+ 
+ class PredictionScreenDisplay extends GetView<LoginController> {
+-  // Declare the TextEditingController for each input field
+   final TextEditingController ageController = TextEditingController();
+   final TextEditingController bmiController = TextEditingController();
+   final TextEditingController hba1cController = TextEditingController();
+@@ -14,7 +13,6 @@
+ 
+   @override
+   Widget build(BuildContext context) {
+-    // Shadow decoration for all inputs
+     BoxDecoration inputBoxShadow = BoxDecoration(
+       borderRadius: BorderRadius.circular(12),
+       color: Colors.white,
+Index: dia_assist/pubspec.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>name: dia_assist\r\ndescription: \"A new Flutter project.\"\r\n# The following line prevents the package from being accidentally published to\r\n# pub.dev using `flutter pub publish`. This is preferred for private packages.\r\npublish_to: 'none' # Remove this line if you wish to publish to pub.dev\r\n\r\n# The following defines the version and build number for your application.\r\n# A version number is three numbers separated by dots, like 1.2.43\r\n# followed by an optional build number separated by a +.\r\n# Both the version and the builder number may be overridden in flutter\r\n# build by specifying --build-name and --build-number, respectively.\r\n# In Android, build-name is used as versionName while build-number used as versionCode.\r\n# Read more about Android versioning at https://developer.android.com/studio/publish/versioning\r\n# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.\r\n# Read more about iOS versioning at\r\n# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html\r\n# In Windows, build-name is used as the major, minor, and patch parts\r\n# of the product and file versions while build-number is used as the build suffix.\r\nversion: 1.0.0+1\r\n\r\nenvironment:\r\n  sdk: ^3.4.3\r\n\r\n# Dependencies specify other packages that your package needs in order to work.\r\n# To automatically upgrade your package dependencies to the latest versions\r\n# consider running `flutter pub upgrade --major-versions`. Alternatively,\r\n# dependencies can be manually updated by changing the version numbers below to\r\n# the latest version available on pub.dev. To see which dependencies have newer\r\n# versions available, run `flutter pub outdated`.\r\ndependencies:\r\n  flutter:\r\n    sdk: flutter\r\n  google_fonts:\r\n  get: ^4.6.6\r\n\r\n\r\n  # The following adds the Cupertino Icons font to your application.\r\n  # Use with the CupertinoIcons class for iOS style icons.\r\n  cupertino_icons: ^1.0.8\r\n\r\ndev_dependencies:\r\n  flutter_test:\r\n    sdk: flutter\r\n\r\n\r\n  # The \"flutter_lints\" package below contains a set of recommended lints to\r\n  # encourage good coding practices. The lint set provided by the package is\r\n  # activated in the `analysis_options.yaml` file located at the root of your\r\n  # package. See that file for information about deactivating specific lint\r\n  # rules and activating additional ones.\r\n  flutter_lints: ^4.0.0\r\n\r\n# For information on the generic Dart part of this file, see the\r\n# following page: https://dart.dev/tools/pub/pubspec\r\n\r\n# The following section is specific to Flutter packages.\r\nflutter:\r\n  assets:\r\n    - assets/images/\r\n\r\n\r\n  # The following line ensures that the Material Icons font is\r\n  # included with your application, so that you can use the icons in\r\n  # the material Icons class.\r\n  uses-material-design: true\r\n\r\n  # To add assets to your application, add an assets section, like this:\r\n  #   - images/a_dot_ham.jpeg\r\n\r\n  # An image asset can refer to one or more resolution-specific \"variants\", see\r\n  # https://flutter.dev/to/resolution-aware-images\r\n\r\n  # For details regarding adding assets from package dependencies, see\r\n  # https://flutter.dev/to/asset-from-package\r\n\r\n  # To add custom fonts to your application, add a fonts section here,\r\n  # in this \"flutter\" section. Each entry in this list should have a\r\n  # \"family\" key with the font family name, and a \"fonts\" key with a\r\n  # list giving the asset and other descriptors for the font. For\r\n  # example:\r\n  # fonts:\r\n  #   - family: Schyler\r\n  #     fonts:\r\n  #       - asset: fonts/Schyler-Regular.ttf\r\n  #       - asset: fonts/Schyler-Italic.ttf\r\n  #         style: italic\r\n  #   - family: Trajan Pro\r\n  #     fonts:\r\n  #       - asset: fonts/TrajanPro.ttf\r\n  #       - asset: fonts/TrajanPro_Bold.ttf\r\n  #         weight: 700\r\n  #\r\n  # For details regarding fonts from package dependencies,\r\n  # see https://flutter.dev/to/font-from-package\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/dia_assist/pubspec.yaml b/dia_assist/pubspec.yaml
+--- a/dia_assist/pubspec.yaml	(revision 441d382df9233d286cf2eb2ea7933b10aae6ee54)
++++ b/dia_assist/pubspec.yaml	(date 1733464359315)
+@@ -19,7 +19,7 @@
+ version: 1.0.0+1
+ 
+ environment:
+-  sdk: ^3.4.3
++  sdk: ^3.4.0-99.1.beta
+ 
+ # Dependencies specify other packages that your package needs in order to work.
+ # To automatically upgrade your package dependencies to the latest versions
+Index: .idea/Dia-assist.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"JAVA_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\" inherit-compiler-output=\"true\">\r\n    <exclude-output />\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <excludeFolder url=\"file://$MODULE_DIR$/dia_assist/.dart_tool\" />\r\n      <excludeFolder url=\"file://$MODULE_DIR$/dia_assist/.pub\" />\r\n      <excludeFolder url=\"file://$MODULE_DIR$/dia_assist/build\" />\r\n    </content>\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n    <orderEntry type=\"library\" name=\"Dart SDK\" level=\"project\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/Dia-assist.iml b/.idea/Dia-assist.iml
+--- a/.idea/Dia-assist.iml	(revision 441d382df9233d286cf2eb2ea7933b10aae6ee54)
++++ b/.idea/Dia-assist.iml	(date 1733464359260)
+@@ -6,9 +6,22 @@
+       <excludeFolder url="file://$MODULE_DIR$/dia_assist/.dart_tool" />
+       <excludeFolder url="file://$MODULE_DIR$/dia_assist/.pub" />
+       <excludeFolder url="file://$MODULE_DIR$/dia_assist/build" />
++      <excludeFolder url="file://$MODULE_DIR$/dia_assist/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux/.dart_tool" />
++      <excludeFolder url="file://$MODULE_DIR$/dia_assist/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux/.pub" />
++      <excludeFolder url="file://$MODULE_DIR$/dia_assist/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux/build" />
++      <excludeFolder url="file://$MODULE_DIR$/dia_assist/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux/example/.dart_tool" />
++      <excludeFolder url="file://$MODULE_DIR$/dia_assist/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux/example/.pub" />
++      <excludeFolder url="file://$MODULE_DIR$/dia_assist/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux/example/build" />
++      <excludeFolder url="file://$MODULE_DIR$/dia_assist/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/.dart_tool" />
++      <excludeFolder url="file://$MODULE_DIR$/dia_assist/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/.pub" />
++      <excludeFolder url="file://$MODULE_DIR$/dia_assist/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/build" />
++      <excludeFolder url="file://$MODULE_DIR$/dia_assist/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/example/.dart_tool" />
++      <excludeFolder url="file://$MODULE_DIR$/dia_assist/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/example/.pub" />
++      <excludeFolder url="file://$MODULE_DIR$/dia_assist/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/example/build" />
+     </content>
+     <orderEntry type="inheritedJdk" />
+     <orderEntry type="sourceFolder" forTests="false" />
+     <orderEntry type="library" name="Dart SDK" level="project" />
++    <orderEntry type="library" name="Dart Packages" level="project" />
+   </component>
+ </module>
+\ No newline at end of file
+Index: .idea/libraries/Dart_SDK.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><component name=\"libraryTable\">\r\n  <library name=\"Dart SDK\">\r\n    <CLASSES>\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/async\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/cli\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/collection\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/convert\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/core\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/developer\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/ffi\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/html\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/indexed_db\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/io\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/isolate\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/js\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/js_interop\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/js_interop_unsafe\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/js_util\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/math\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/mirrors\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/svg\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/typed_data\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/web_audio\" />\r\n      <root url=\"file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/web_gl\" />\r\n    </CLASSES>\r\n    <JAVADOC />\r\n    <SOURCES />\r\n  </library>\r\n</component>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/libraries/Dart_SDK.xml b/.idea/libraries/Dart_SDK.xml
+--- a/.idea/libraries/Dart_SDK.xml	(revision 441d382df9233d286cf2eb2ea7933b10aae6ee54)
++++ b/.idea/libraries/Dart_SDK.xml	(date 1733464359272)
+@@ -1,27 +1,27 @@
+ <component name="libraryTable">
+   <library name="Dart SDK">
+     <CLASSES>
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/async" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/cli" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/collection" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/convert" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/core" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/developer" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/ffi" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/html" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/indexed_db" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/io" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/isolate" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/js" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/js_interop" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/js_interop_unsafe" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/js_util" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/math" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/mirrors" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/svg" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/typed_data" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/web_audio" />
+-      <root url="file://$PROJECT_DIR$/../../../../../flutter_source/New folder/flutter/bin/cache/dart-sdk/lib/web_gl" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/async" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/cli" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/collection" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/convert" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/core" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/developer" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/ffi" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/html" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/indexed_db" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/io" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/isolate" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/js" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/js_interop" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/js_interop_unsafe" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/js_util" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/math" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/mirrors" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/svg" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/typed_data" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/web_audio" />
++      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/dart-sdk/lib/web_gl" />
+     </CLASSES>
+     <JAVADOC />
+     <SOURCES />
+Index: dia_assist/pubspec.lock
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Generated by pub\r\n# See https://dart.dev/tools/pub/glossary#lockfile\r\npackages:\r\n  async:\r\n    dependency: transitive\r\n    description:\r\n      name: async\r\n      sha256: \"947bfcf187f74dbc5e146c9eb9c0f10c9f8b30743e341481c1e2ed3ecc18c20c\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.11.0\"\r\n  boolean_selector:\r\n    dependency: transitive\r\n    description:\r\n      name: boolean_selector\r\n      sha256: \"6cfb5af12253eaf2b368f07bacc5a80d1301a071c73360d746b7f2e32d762c66\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.1.1\"\r\n  characters:\r\n    dependency: transitive\r\n    description:\r\n      name: characters\r\n      sha256: \"04a925763edad70e8443c99234dc3328f442e811f1d8fd1a72f1c8ad0f69a605\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.3.0\"\r\n  clock:\r\n    dependency: transitive\r\n    description:\r\n      name: clock\r\n      sha256: cb6d7f03e1de671e34607e909a7213e31d7752be4fb66a86d29fe1eb14bfb5cf\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.1.1\"\r\n  collection:\r\n    dependency: transitive\r\n    description:\r\n      name: collection\r\n      sha256: ee67cb0715911d28db6bf4af1026078bd6f0128b07a5f66fb2ed94ec6783c09a\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.18.0\"\r\n  crypto:\r\n    dependency: transitive\r\n    description:\r\n      name: crypto\r\n      sha256: \"1e445881f28f22d6140f181e07737b22f1e099a5e1ff94b0af2f9e4a463f4855\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"3.0.6\"\r\n  cupertino_icons:\r\n    dependency: \"direct main\"\r\n    description:\r\n      name: cupertino_icons\r\n      sha256: ba631d1c7f7bef6b729a622b7b752645a2d076dba9976925b8f25725a30e1ee6\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.0.8\"\r\n  fake_async:\r\n    dependency: transitive\r\n    description:\r\n      name: fake_async\r\n      sha256: \"511392330127add0b769b75a987850d136345d9227c6b94c96a04cf4a391bf78\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.3.1\"\r\n  ffi:\r\n    dependency: transitive\r\n    description:\r\n      name: ffi\r\n      sha256: \"16ed7b077ef01ad6170a3d0c57caa4a112a38d7a2ed5602e0aca9ca6f3d98da6\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.1.3\"\r\n  flutter:\r\n    dependency: \"direct main\"\r\n    description: flutter\r\n    source: sdk\r\n    version: \"0.0.0\"\r\n  flutter_lints:\r\n    dependency: \"direct dev\"\r\n    description:\r\n      name: flutter_lints\r\n      sha256: \"3f41d009ba7172d5ff9be5f6e6e6abb4300e263aab8866d2a0842ed2a70f8f0c\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"4.0.0\"\r\n  flutter_test:\r\n    dependency: \"direct dev\"\r\n    description: flutter\r\n    source: sdk\r\n    version: \"0.0.0\"\r\n  get:\r\n    dependency: \"direct main\"\r\n    description:\r\n      name: get\r\n      sha256: e4e7335ede17452b391ed3b2ede016545706c01a02292a6c97619705e7d2a85e\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"4.6.6\"\r\n  google_fonts:\r\n    dependency: \"direct main\"\r\n    description:\r\n      name: google_fonts\r\n      sha256: b1ac0fe2832c9cc95e5e88b57d627c5e68c223b9657f4b96e1487aa9098c7b82\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"6.2.1\"\r\n  http:\r\n    dependency: transitive\r\n    description:\r\n      name: http\r\n      sha256: b9c29a161230ee03d3ccf545097fccd9b87a5264228c5d348202e0f0c28f9010\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.2.2\"\r\n  http_parser:\r\n    dependency: transitive\r\n    description:\r\n      name: http_parser\r\n      sha256: \"2aa08ce0341cc9b354a498388e30986515406668dbcc4f7c950c3e715496693b\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"4.0.2\"\r\n  leak_tracker:\r\n    dependency: transitive\r\n    description:\r\n      name: leak_tracker\r\n      sha256: \"7f0df31977cb2c0b88585095d168e689669a2cc9b97c309665e3386f3e9d341a\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"10.0.4\"\r\n  leak_tracker_flutter_testing:\r\n    dependency: transitive\r\n    description:\r\n      name: leak_tracker_flutter_testing\r\n      sha256: \"06e98f569d004c1315b991ded39924b21af84cf14cc94791b8aea337d25b57f8\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"3.0.3\"\r\n  leak_tracker_testing:\r\n    dependency: transitive\r\n    description:\r\n      name: leak_tracker_testing\r\n      sha256: \"6ba465d5d76e67ddf503e1161d1f4a6bc42306f9d66ca1e8f079a47290fb06d3\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"3.0.1\"\r\n  lints:\r\n    dependency: transitive\r\n    description:\r\n      name: lints\r\n      sha256: \"976c774dd944a42e83e2467f4cc670daef7eed6295b10b36ae8c85bcbf828235\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"4.0.0\"\r\n  matcher:\r\n    dependency: transitive\r\n    description:\r\n      name: matcher\r\n      sha256: d2323aa2060500f906aa31a895b4030b6da3ebdcc5619d14ce1aada65cd161cb\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"0.12.16+1\"\r\n  material_color_utilities:\r\n    dependency: transitive\r\n    description:\r\n      name: material_color_utilities\r\n      sha256: \"0e0a020085b65b6083975e499759762399b4475f766c21668c4ecca34ea74e5a\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"0.8.0\"\r\n  meta:\r\n    dependency: transitive\r\n    description:\r\n      name: meta\r\n      sha256: \"7687075e408b093f36e6bbf6c91878cc0d4cd10f409506f7bc996f68220b9136\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.12.0\"\r\n  path:\r\n    dependency: transitive\r\n    description:\r\n      name: path\r\n      sha256: \"087ce49c3f0dc39180befefc60fdb4acd8f8620e5682fe2476afd0b3688bb4af\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.9.0\"\r\n  path_provider:\r\n    dependency: transitive\r\n    description:\r\n      name: path_provider\r\n      sha256: \"50c5dd5b6e1aaf6fb3a78b33f6aa3afca52bf903a8a5298f53101fdaee55bbcd\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.1.5\"\r\n  path_provider_android:\r\n    dependency: transitive\r\n    description:\r\n      name: path_provider_android\r\n      sha256: \"6f01f8e37ec30b07bc424b4deabac37cacb1bc7e2e515ad74486039918a37eb7\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.2.10\"\r\n  path_provider_foundation:\r\n    dependency: transitive\r\n    description:\r\n      name: path_provider_foundation\r\n      sha256: \"4843174df4d288f5e29185bd6e72a6fbdf5a4a4602717eed565497429f179942\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.4.1\"\r\n  path_provider_linux:\r\n    dependency: transitive\r\n    description:\r\n      name: path_provider_linux\r\n      sha256: f7a1fe3a634fe7734c8d3f2766ad746ae2a2884abe22e241a8b301bf5cac3279\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.2.1\"\r\n  path_provider_platform_interface:\r\n    dependency: transitive\r\n    description:\r\n      name: path_provider_platform_interface\r\n      sha256: \"88f5779f72ba699763fa3a3b06aa4bf6de76c8e5de842cf6f29e2e06476c2334\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.1.2\"\r\n  path_provider_windows:\r\n    dependency: transitive\r\n    description:\r\n      name: path_provider_windows\r\n      sha256: bd6f00dbd873bfb70d0761682da2b3a2c2fccc2b9e84c495821639601d81afe7\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.3.0\"\r\n  platform:\r\n    dependency: transitive\r\n    description:\r\n      name: platform\r\n      sha256: \"5d6b1b0036a5f331ebc77c850ebc8506cbc1e9416c27e59b439f917a902a4984\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"3.1.6\"\r\n  plugin_platform_interface:\r\n    dependency: transitive\r\n    description:\r\n      name: plugin_platform_interface\r\n      sha256: \"4820fbfdb9478b1ebae27888254d445073732dae3d6ea81f0b7e06d5dedc3f02\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.1.8\"\r\n  sky_engine:\r\n    dependency: transitive\r\n    description: flutter\r\n    source: sdk\r\n    version: \"0.0.99\"\r\n  source_span:\r\n    dependency: transitive\r\n    description:\r\n      name: source_span\r\n      sha256: \"53e943d4206a5e30df338fd4c6e7a077e02254531b138a15aec3bd143c1a8b3c\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.10.0\"\r\n  stack_trace:\r\n    dependency: transitive\r\n    description:\r\n      name: stack_trace\r\n      sha256: \"73713990125a6d93122541237550ee3352a2d84baad52d375a4cad2eb9b7ce0b\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.11.1\"\r\n  stream_channel:\r\n    dependency: transitive\r\n    description:\r\n      name: stream_channel\r\n      sha256: ba2aa5d8cc609d96bbb2899c28934f9e1af5cddbd60a827822ea467161eb54e7\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.1.2\"\r\n  string_scanner:\r\n    dependency: transitive\r\n    description:\r\n      name: string_scanner\r\n      sha256: \"556692adab6cfa87322a115640c11f13cb77b3f076ddcc5d6ae3c20242bedcde\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.2.0\"\r\n  term_glyph:\r\n    dependency: transitive\r\n    description:\r\n      name: term_glyph\r\n      sha256: a29248a84fbb7c79282b40b8c72a1209db169a2e0542bce341da992fe1bc7e84\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.2.1\"\r\n  test_api:\r\n    dependency: transitive\r\n    description:\r\n      name: test_api\r\n      sha256: \"9955ae474176f7ac8ee4e989dadfb411a58c30415bcfb648fa04b2b8a03afa7f\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"0.7.0\"\r\n  typed_data:\r\n    dependency: transitive\r\n    description:\r\n      name: typed_data\r\n      sha256: facc8d6582f16042dd49f2463ff1bd6e2c9ef9f3d5da3d9b087e244a7b564b3c\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.3.2\"\r\n  vector_math:\r\n    dependency: transitive\r\n    description:\r\n      name: vector_math\r\n      sha256: \"80b3257d1492ce4d091729e3a67a60407d227c27241d6927be0130c98e741803\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.1.4\"\r\n  vm_service:\r\n    dependency: transitive\r\n    description:\r\n      name: vm_service\r\n      sha256: \"3923c89304b715fb1eb6423f017651664a03bf5f4b29983627c4da791f74a4ec\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"14.2.1\"\r\n  web:\r\n    dependency: transitive\r\n    description:\r\n      name: web\r\n      sha256: cd3543bd5798f6ad290ea73d210f423502e71900302dde696f8bff84bf89a1cb\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.1.0\"\r\n  xdg_directories:\r\n    dependency: transitive\r\n    description:\r\n      name: xdg_directories\r\n      sha256: \"7a3f37b05d989967cdddcbb571f1ea834867ae2faa29725fd085180e0883aa15\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.1.0\"\r\nsdks:\r\n  dart: \">=3.4.3 <4.0.0\"\r\n  flutter: \">=3.22.0\"\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/dia_assist/pubspec.lock b/dia_assist/pubspec.lock
+--- a/dia_assist/pubspec.lock	(revision 441d382df9233d286cf2eb2ea7933b10aae6ee54)
++++ b/dia_assist/pubspec.lock	(date 1733464376645)
+@@ -45,10 +45,10 @@
+     dependency: transitive
+     description:
+       name: crypto
+-      sha256: "1e445881f28f22d6140f181e07737b22f1e099a5e1ff94b0af2f9e4a463f4855"
++      sha256: ff625774173754681d66daaf4a448684fb04b78f902da9cb3d308c19cc5e8bab
+       url: "https://pub.dev"
+     source: hosted
+-    version: "3.0.6"
++    version: "3.0.3"
+   cupertino_icons:
+     dependency: "direct main"
+     description:
+@@ -127,26 +127,26 @@
+     dependency: transitive
+     description:
+       name: leak_tracker
+-      sha256: "7f0df31977cb2c0b88585095d168e689669a2cc9b97c309665e3386f3e9d341a"
++      sha256: cdd14e3836065a1f6302a236ec8b5f700695c803c57ae11a1c84df31e6bcf831
+       url: "https://pub.dev"
+     source: hosted
+-    version: "10.0.4"
++    version: "10.0.3"
+   leak_tracker_flutter_testing:
+     dependency: transitive
+     description:
+       name: leak_tracker_flutter_testing
+-      sha256: "06e98f569d004c1315b991ded39924b21af84cf14cc94791b8aea337d25b57f8"
++      sha256: "9b2ef90589911d665277464e0482b209d39882dffaaf4ef69a3561a3354b2ebc"
+       url: "https://pub.dev"
+     source: hosted
+-    version: "3.0.3"
++    version: "3.0.2"
+   leak_tracker_testing:
+     dependency: transitive
+     description:
+       name: leak_tracker_testing
+-      sha256: "6ba465d5d76e67ddf503e1161d1f4a6bc42306f9d66ca1e8f079a47290fb06d3"
++      sha256: fd3cd66cb2bcd7b50dcd3b413af49d78051f809c8b3f6e047962765c15a0d23d
+       url: "https://pub.dev"
+     source: hosted
+-    version: "3.0.1"
++    version: "3.0.0"
+   lints:
+     dependency: transitive
+     description:
+@@ -175,10 +175,10 @@
+     dependency: transitive
+     description:
+       name: meta
+-      sha256: "7687075e408b093f36e6bbf6c91878cc0d4cd10f409506f7bc996f68220b9136"
++      sha256: d584fa6707a52763a52446f02cc621b077888fb63b93bbcb1143a7be5a0c0c04
+       url: "https://pub.dev"
+     source: hosted
+-    version: "1.12.0"
++    version: "1.11.0"
+   path:
+     dependency: transitive
+     description:
+@@ -191,18 +191,18 @@
+     dependency: transitive
+     description:
+       name: path_provider
+-      sha256: "50c5dd5b6e1aaf6fb3a78b33f6aa3afca52bf903a8a5298f53101fdaee55bbcd"
++      sha256: fec0d61223fba3154d87759e3cc27fe2c8dc498f6386c6d6fc80d1afdd1bf378
+       url: "https://pub.dev"
+     source: hosted
+-    version: "2.1.5"
++    version: "2.1.4"
+   path_provider_android:
+     dependency: transitive
+     description:
+       name: path_provider_android
+-      sha256: "6f01f8e37ec30b07bc424b4deabac37cacb1bc7e2e515ad74486039918a37eb7"
++      sha256: a248d8146ee5983446bf03ed5ea8f6533129a12b11f12057ad1b4a67a2b3b41d
+       url: "https://pub.dev"
+     source: hosted
+-    version: "2.2.10"
++    version: "2.2.4"
+   path_provider_foundation:
+     dependency: transitive
+     description:
+@@ -324,18 +324,18 @@
+     dependency: transitive
+     description:
+       name: vm_service
+-      sha256: "3923c89304b715fb1eb6423f017651664a03bf5f4b29983627c4da791f74a4ec"
++      sha256: a2662fb1f114f4296cf3f5a50786a2d888268d7776cf681aa17d660ffa23b246
+       url: "https://pub.dev"
+     source: hosted
+-    version: "14.2.1"
++    version: "14.0.0"
+   web:
+     dependency: transitive
+     description:
+       name: web
+-      sha256: cd3543bd5798f6ad290ea73d210f423502e71900302dde696f8bff84bf89a1cb
++      sha256: "97da13628db363c635202ad97068d47c5b8aa555808e7a9411963c533b449b27"
+       url: "https://pub.dev"
+     source: hosted
+-    version: "1.1.0"
++    version: "0.5.1"
+   xdg_directories:
+     dependency: transitive
+     description:
+@@ -345,5 +345,5 @@
+     source: hosted
+     version: "1.1.0"
+ sdks:
+-  dart: ">=3.4.3 <4.0.0"
+-  flutter: ">=3.22.0"
++  dart: ">=3.4.0-99.1.beta <4.0.0"
++  flutter: ">=3.19.2"
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"NONE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"6a68e786-fb03-44d3-8daa-7d9d381bb8b1\" name=\"Changes\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/dia_assist/lib/main.dart\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/dia_assist/lib/main.dart\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/dia_assist/lib/pages/about_screen.dart\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/dia_assist/lib/pages/home/about_screen.dart\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/dia_assist/lib/pages/home_page.dart\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/dia_assist/lib/pages/home/home_page.dart\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/dia_assist/pubspec.lock\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/dia_assist/pubspec.lock\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/dia_assist/pubspec.yaml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/dia_assist/pubspec.yaml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/dia_assist/test/widget_test.dart\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/dia_assist/test/widget_test.dart\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ClangdSettings\">\r\n    <option name=\"formatViaClangd\" value=\"false\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Dart File\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"master\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 5\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2pnl9pkITit6BJoDVJWEs0aoHBi\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Flutter.main.dart.executor\": \"Run\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.cidr.known.project.marker\": \"true\",\r\n    \"RunOnceActivity.readMode.enableVisualFormatting\": \"true\",\r\n    \"cf.first.check.clang-format\": \"false\",\r\n    \"cidr.known.project.marker\": \"true\",\r\n    \"dart.analysis.tool.window.visible\": \"false\",\r\n    \"git-widget-placeholder\": \"ashok\",\r\n    \"io.flutter.reload.alreadyRun\": \"true\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Users/Dell1/Documents/GitHub/Dia-assist/dia_assist/assets/images\",\r\n    \"settings.editor.selected.configurable\": \"flutter.settings\",\r\n    \"show.migrate.to.gradle.popup\": \"false\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Dell1\\Documents\\GitHub\\Dia-assist\\dia_assist\\assets\\images\" />\r\n      <recent name=\"C:\\Users\\Dell1\\Documents\\GitHub\\Dia-assist\\dia_assist\\assets\" />\r\n      <recent name=\"C:\\Users\\Dell1\\Documents\\GitHub\\Dia-assist\\dia_assist\\lib\\themes\" />\r\n      <recent name=\"C:\\Users\\Dell1\\Documents\\GitHub\\Dia-assist\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Ashok acharya\\Documents\\GitHub\\Dia-assist\\dia_assist\\lib\" />\r\n      <recent name=\"C:\\Users\\Ashok acharya\\Documents\\GitHub\\Dia-assist\\dia_assist\\lib\\pages\\home\" />\r\n      <recent name=\"C:\\Users\\Ashok acharya\\Documents\\GitHub\\Dia-assist\\dia_assist\\lib\\controllers\\home\" />\r\n      <recent name=\"C:\\Users\\Ashok acharya\\Documents\\GitHub\\Dia-assist\\dia_assist\\lib\\pages\" />\r\n      <recent name=\"C:\\Users\\Ashok acharya\\Documents\\GitHub\\Dia-assist\\dia_assist\\lib\\controllers\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"main.dart\" type=\"FlutterRunConfigurationType\" factoryName=\"Flutter\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"filePath\" value=\"$PROJECT_DIR$/dia_assist/lib/main.dart\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Flutter.main.dart\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"6a68e786-fb03-44d3-8daa-7d9d381bb8b1\" name=\"Changes\" comment=\"\" />\r\n      <created>1733409571726</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1733409571726</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 441d382df9233d286cf2eb2ea7933b10aae6ee54)
++++ b/.idea/workspace.xml	(date 1733464378322)
+@@ -5,13 +5,14 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="6a68e786-fb03-44d3-8daa-7d9d381bb8b1" name="Changes" comment="">
++      <change beforePath="$PROJECT_DIR$/.idea/Dia-assist.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Dia-assist.iml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/dia_assist/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/lib/main.dart" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/dia_assist/lib/pages/about_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/lib/pages/home/about_screen.dart" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/dia_assist/lib/pages/home_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/lib/pages/home/home_page.dart" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/dia_assist/lib/pages/home/home_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/lib/pages/home/home_page.dart" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/dia_assist/lib/pages/prediction_page/Screens/prediction_screen_display.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/lib/pages/prediction_page/Screens/prediction_screen_display.dart" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/dia_assist/lib/themes/colors_theme.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/lib/themes/colors_theme.dart" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/dia_assist/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/pubspec.lock" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/dia_assist/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/pubspec.yaml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/dia_assist/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/test/widget_test.dart" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -44,23 +45,23 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "Flutter.main.dart.executor": "Run",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "RunOnceActivity.cidr.known.project.marker": "true",
+-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+-    "cf.first.check.clang-format": "false",
+-    "cidr.known.project.marker": "true",
+-    "dart.analysis.tool.window.visible": "false",
+-    "git-widget-placeholder": "ashok",
+-    "io.flutter.reload.alreadyRun": "true",
+-    "kotlin-language-version-configured": "true",
+-    "last_opened_file_path": "C:/Users/Dell1/Documents/GitHub/Dia-assist/dia_assist/assets/images",
+-    "settings.editor.selected.configurable": "flutter.settings",
+-    "show.migrate.to.gradle.popup": "false"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
++    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
++    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
++    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;shal&quot;,
++    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
++    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/Users/Dell1/Documents/GitHub/Dia-assist/dia_assist/assets/images&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;flutter.settings&quot;,
++    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="CopyFile.RECENT_KEYS">
+       <recent name="C:\Users\Dell1\Documents\GitHub\Dia-assist\dia_assist\assets\images" />
+Index: dia_assist/lib/themes/colors_theme.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'package:flutter/material.dart';\r\n\r\n/// Define custom colors used throughout the app.\r\nclass AppColors {\r\n  // Primary Colors\r\n  static const Color primary = Color(0xFF190485); // main blue color\r\n  static const Color primaryVariant = Color(0xFFD9D9D9); // blur color\r\n\r\n  // Secondary Colors\r\n  static const Color secondary = Color(0xFF000000); //black\r\n  static const Color secondaryVariant = Color(0xFFFFA000);\r\n  static const Color blacklite = Colors.black26;\r\n  static const Color blacktextfield = Colors.black54;\r\n\r\n  // Background and Surface Colors\r\n  static const Color background = Color(0xFFFFFFFF);//white\r\n  static const Color surface = Color(0xFFF3F1FF); // text field\r\n\r\n  // Text Colors\r\n  static const Color textPrimary = Color(0xFF190485); //blue text\r\n  static const Color textSecondary = Color(0xFFFF0000); //red text\r\n\r\n  // Additional Colors\r\n  static const Color error = Color(0xFFD32F2F);\r\n}\r\n\r\n/// Create a color scheme using the custom colors.\r\nfinal  ColorScheme appColorScheme = ColorScheme(\r\n  primary: AppColors.primary,\r\n  primaryContainer: AppColors.primaryVariant,\r\n  secondary: AppColors.secondary,\r\n  secondaryContainer: AppColors.secondaryVariant,\r\n  surface: AppColors.surface,\r\n  error: AppColors.error,\r\n  onPrimary: Colors.white, // Text on primary color\r\n  onSecondary: Colors.black, // Text on secondary color\r\n  onSurface: AppColors.textPrimary,\r\n  onError: Colors.white, // Text on error color\r\n  brightness: Brightness.light,\r\n);\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/dia_assist/lib/themes/colors_theme.dart b/dia_assist/lib/themes/colors_theme.dart
+--- a/dia_assist/lib/themes/colors_theme.dart	(revision 441d382df9233d286cf2eb2ea7933b10aae6ee54)
++++ b/dia_assist/lib/themes/colors_theme.dart	(date 1733464359306)
+@@ -27,6 +27,8 @@
+ /// Create a color scheme using the custom colors.
+ final  ColorScheme appColorScheme = ColorScheme(
+   primary: AppColors.primary,
++  background: AppColors.background,
++  onBackground: Colors.black,
+   primaryContainer: AppColors.primaryVariant,
+   secondary: AppColors.secondary,
+   secondaryContainer: AppColors.secondaryVariant,
