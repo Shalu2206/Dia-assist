@@ -5,6 +5,7 @@ import '../../../controllers/login_controller.dart';
 import '../../../themes/colors_theme.dart';
 
 class PredictionScreenDisplay extends GetView<LoginController> {
+  // Declare the TextEditingController for each input field
   final TextEditingController ageController = TextEditingController();
   final TextEditingController bmiController = TextEditingController();
   final TextEditingController hba1cController = TextEditingController();
@@ -13,6 +14,7 @@ class PredictionScreenDisplay extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
+    // Shadow decoration for all inputs
     BoxDecoration inputBoxShadow = BoxDecoration(
       borderRadius: BorderRadius.circular(12),
       color: Colors.white,
