@@ -1,11 +1,19 @@
 import 'dart:io';
-
 import 'package:dia_assist/pages/home/home_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:tflite_flutter/tflite_flutter.dart';
 
 class LoginController extends GetxController {
+  late Interpreter interpreter; // Declare the interpreter
+
+  @override
+  void onInit() {
+    super.onInit();
+    loadModel();
+  }
+
   // Observable variables for username and password
   var username = ''.obs;
   var password = ''.obs;
@@ -32,6 +40,11 @@ class LoginController extends GetxController {
   void validateFields() {
     showUsernameError.value = usernameController.text.isEmpty;
     showPasswordError.value = passwordController.text.isEmpty;
+  }
+
+  // Load the model into the interpreter
+  Future<void> loadModel() async {
+    interpreter = await Interpreter.fromAsset('assets/diabetes_model.tflite');
   }
 
   // Handle login functionality (logic-only, no storage)

@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
   google_fonts:
   get: ^4.6.6
+  tflite_flutter: ^0.11.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -56,7 +57,9 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
-    - assets/images/
+    - assets/diabetes_model.tflite
+    - assets/images/logo.jpg
+    - assets/images/logo.webp
 
 
   # The following line ensures that the Material Icons font is

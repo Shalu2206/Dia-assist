@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import '../controllers/bindings/login_binding.dart';
-import '../pages/login/screens/login_screen.dart';
+import '../pages/login/login_screen.dart';
 
 class AppPages {
   static final routes = [
