@@ -17,7 +17,6 @@ class PredictionScreenDisplay extends GetView<LoginController> {
     // Shadow decoration for all inputs
     BoxDecoration inputBoxShadow = BoxDecoration(
       borderRadius: BorderRadius.circular(12),
-      color: Colors.white,
       boxShadow: [
         BoxShadow(
           color: Colors.black.withOpacity(0.1), // Shadow color
@@ -34,7 +33,7 @@ class PredictionScreenDisplay extends GetView<LoginController> {
               Get.back();
             },
             child: const Icon(Icons.arrow_back, color: Colors.white)),
-        backgroundColor: AppColors.primary,
+        backgroundColor:Color.fromARGB(255, 10, 63, 94),
         title: Text(
           'Diabetics Prediction',
           style: Theme.of(context)
@@ -47,8 +46,8 @@ class PredictionScreenDisplay extends GetView<LoginController> {
         decoration:const  BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xff010129d3),
-              Color(0xFF400D0D8A),
+              Color.fromARGB(255, 10, 63, 94),
+              Color.fromARGB(255, 126, 202, 225),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -60,30 +59,21 @@ class PredictionScreenDisplay extends GetView<LoginController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(
-                  child: Text(
-                    'Fill the required data',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ),
-                SizedBox(height: 20),
-                Text('Gender', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primary)),
+                Text('Gender', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.background)),
                 SizedBox(height: 8),
                 Obx(() => Container(
                   decoration: inputBoxShadow, // Add shadow decoration
                   child: DropdownButtonFormField<String>(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none, // Hide the default border
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      filled: true,
-                      fillColor: Colors.white,
                     ),
+                    dropdownColor: Colors.black,
                     items: ['Male', 'Female']
                         .map((gender) => DropdownMenuItem(
                       value: gender,
-                      child: Text(gender),
+                      child: Text(gender,style: TextStyle(color: Colors.white),),
                     ))
                         .toList(),
                     value: controller.selectedGender.value.isEmpty
@@ -95,7 +85,7 @@ class PredictionScreenDisplay extends GetView<LoginController> {
                   ),
                 )),
                 SizedBox(height: 20),
-                Text('Age', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primary)),
+                Text('Age', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.background)),
                 Container(
                   decoration: inputBoxShadow, // Add shadow decoration
                   child: TextFormField(
@@ -103,32 +93,27 @@ class PredictionScreenDisplay extends GetView<LoginController> {
                     keyboardType: TextInputType.number, // Only numeric input
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none, // Hide the default border
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      filled: true,
-                      fillColor: Colors.white,
                     ),
                   ),
                 ),
                 SizedBox(height: 20),
-                Text('Hypertension', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primary)),
+                Text('Hypertension', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.background)),
                 SizedBox(height: 8),
                 Obx(() => Container(
                   decoration: inputBoxShadow, // Add shadow decoration
                   child: DropdownButtonFormField<String>(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none, // Hide the default border
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      filled: true,
-                      fillColor: Colors.white,
                     ),
+                    dropdownColor: Colors.black,
                     items: ['Yes', 'No']
                         .map((tension) => DropdownMenuItem(
                       value: tension,
-                      child: Text(tension),
+                      child: Text(tension,style: TextStyle(color: Colors.white),),
                     ))
                         .toList(),
                     value: controller.selectedTension.value.isEmpty
@@ -140,23 +125,22 @@ class PredictionScreenDisplay extends GetView<LoginController> {
                   ),
                 )),
                 SizedBox(height: 20),
-                Text('Smoking History', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primary)),
+                Text('Smoking History', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.background)),
                 SizedBox(height: 8),
                 Obx(() => Container(
                   decoration: inputBoxShadow, // Add shadow decoration
                   child: DropdownButtonFormField<String>(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none, // Hide the default border
+                        borderRadius: BorderRadius.circular(20),
+
                       ),
-                      filled: true,
-                      fillColor: Colors.white,
                     ),
+                    dropdownColor: Colors.black,
                     items: ['Never', 'No Info', 'Current']
                         .map((smoking) => DropdownMenuItem(
                       value: smoking,
-                      child: Text(smoking),
+                      child: Text(smoking,style: TextStyle(color: Colors.white),),
                     ))
                         .toList(),
                     value: controller.selectedSmoking.value.isEmpty
@@ -168,23 +152,21 @@ class PredictionScreenDisplay extends GetView<LoginController> {
                   ),
                 )),
                 SizedBox(height: 20),
-                Text('Heart Disease', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primary)),
+                Text('Heart Disease', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.background)),
                 SizedBox(height: 8),
                 Obx(() => Container(
                   decoration: inputBoxShadow, // Add shadow decoration
                   child: DropdownButtonFormField<String>(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none, // Hide the default border
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      filled: true,
-                      fillColor: Colors.white,
                     ),
+                    dropdownColor: Colors.black,
                     items: ['Yes', 'No']
                         .map((disease) => DropdownMenuItem(
                       value: disease,
-                      child: Text(disease),
+                      child: Text(disease,style: TextStyle(color: Colors.white),),
                     ))
                         .toList(),
                     value: controller.selectedDisease.value.isEmpty
@@ -196,7 +178,7 @@ class PredictionScreenDisplay extends GetView<LoginController> {
                   ),
                 )),
                 SizedBox(height: 20),
-                Text('BMI', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primary)),
+                Text('BMI', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.background)),
                 Container(
                   decoration: inputBoxShadow, // Add shadow decoration
                   child: TextFormField(
@@ -204,16 +186,14 @@ class PredictionScreenDisplay extends GetView<LoginController> {
                     keyboardType: TextInputType.number, // Only numeric input
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none, // Hide the default border
+                        borderRadius: BorderRadius.circular(20),
+
                       ),
-                      filled: true,
-                      fillColor: Colors.white,
                     ),
                   ),
                 ),
                 SizedBox(height: 20),
-                Text('HBA1C', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primary)),
+                Text('HBA1C', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.background)),
                 Container(
                   decoration: inputBoxShadow, // Add shadow decoration
                   child: TextFormField(
@@ -221,16 +201,13 @@ class PredictionScreenDisplay extends GetView<LoginController> {
                     keyboardType: TextInputType.number, // Only numeric input
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none, // Hide the default border
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      filled: true,
-                      fillColor: Colors.white,
                     ),
                   ),
                 ),
                 SizedBox(height: 20),
-                Text('Blood Glucose Level', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primary)),
+                Text('Blood Glucose Level', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.background)),
                 Container(
                   decoration: inputBoxShadow, // Add shadow decoration
                   child: TextFormField(
@@ -238,16 +215,13 @@ class PredictionScreenDisplay extends GetView<LoginController> {
                     keyboardType: TextInputType.number, // Only numeric input
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none, // Hide the default border
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      filled: true,
-                      fillColor: Colors.white,
                     ),
                   ),
                 ),
                 SizedBox(height: 20),
-                Text('Weight (in KG)', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primary)),
+                Text('Weight (in KG)', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.background)),
                 Container(
                   decoration: inputBoxShadow, // Add shadow decoration
                   child: TextFormField(
@@ -255,11 +229,8 @@ class PredictionScreenDisplay extends GetView<LoginController> {
                     keyboardType: TextInputType.number, // Only numeric input
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none, // Hide the default border
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      filled: true,
-                      fillColor: Colors.white,
                     ),
                   ),
                 ),
@@ -272,11 +243,11 @@ class PredictionScreenDisplay extends GetView<LoginController> {
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 10,
-                      backgroundColor: AppColors.primary,
+                      backgroundColor: Color.fromARGB(255, 10, 63, 94),
                     ),
                     child: Text(
                       'Submit',
-                      style: GoogleFonts.openSans(color: Colors.white, fontSize: 18),
+                      style: GoogleFonts.openSans(color: AppColors.background, fontSize: 18),
                     ),
                   ),
                 ),
