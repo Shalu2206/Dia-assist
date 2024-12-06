@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/home_controller.dart';
+import '../../controllers/home_controller.dart';
+import '../prediction_page/Screens/prediction_screen_display.dart';
 import 'about_screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -97,7 +98,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const PredictScreen(),
+                                      builder: (context) => PredictionScreenDisplay(),
                                     ),
                                   );
                                   break;
@@ -146,22 +147,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class PredictScreen extends StatelessWidget {
-  const PredictScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dia-predict'),
-      ),
-      body: Center(
-        child: const Text('Prediction functionality goes here'),
       ),
     );
   }
