@@ -29,7 +29,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0XFFD2F5F2),
       appBar: AppBar(
         backgroundColor: const Color(0XFF31F0E0),
         title: const Text('DIA-ASSIST', style: TextStyle(fontSize: 24)),
