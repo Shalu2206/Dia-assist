@@ -19,7 +19,7 @@ class HomeController extends GetxController {
 
     listItemControllers = List.generate(5, (index) {
       return AnimationController(
-        duration: const Duration(seconds: 1),
+        duration: const Duration(seconds: 2),
         vsync: vsync,
       );
     });

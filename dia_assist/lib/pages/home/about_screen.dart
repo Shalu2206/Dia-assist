@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/home_controller.dart';
 
-class AboutScreen extends StatelessWidget {
-  const AboutScreen({Key? key}) : super(key: key);
+class DiaAwarenessScreen extends StatelessWidget {
+  const DiaAwarenessScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

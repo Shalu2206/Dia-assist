@@ -1,7 +1,8 @@
+import 'package:dia_assist/themes/colors_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/home_controller.dart';
-import '../prediction_page/Screens/prediction_screen_display.dart';
+import '../prediction_page/prediction_screen_display.dart';
 import 'about_screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,16 +30,23 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 126, 202, 225),
       appBar: AppBar(
-        backgroundColor: const Color(0XFF31F0E0),
-        title: const Text('DIA-ASSIST', style: TextStyle(fontSize: 24)),
+        backgroundColor: Color.fromARGB(255, 10, 63, 94),
+        title: const Text('DIA-ASSIST', style: TextStyle(fontSize: 24,color: AppColors.background)),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white), // Back icon
+          onPressed: () {
+            Get.back();
+          },
+        ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications),
+            icon: const Icon(Icons.notifications,color: Colors.white,),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.settings),
+            icon: const Icon(Icons.settings,color: Colors.white,),
             onPressed: () {},
           ),
         ],
@@ -47,11 +55,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         decoration:const  BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.black,
-              Color(0xFF400D0D8A),
+              Color.fromARGB(255, 10, 63, 94),
+              Color.fromARGB(255, 126, 202, 225),
             ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
         ),
         child: SingleChildScrollView(
@@ -90,7 +98,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           )),
                           child: Card(
                             elevation: 5,
-                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            margin: const EdgeInsets.symmetric(vertical: 15),
                             child: ListTile(
                               title: Text(
                                 [
@@ -98,7 +106,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   'Dia-Medicate',
                                   'Previously recorded data',
                                   'Dia-Chat',
-                                  'About'
+                                  'Dia-Awareness'
                                 ][index],
                               ),
                               trailing: const Icon(Icons.arrow_forward),
@@ -141,7 +149,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const AboutScreen(), // This should work now
+                                        builder: (context) => const DiaAwarenessScreen(), // This should work now
                                       ),
                                     );
                                     break;
