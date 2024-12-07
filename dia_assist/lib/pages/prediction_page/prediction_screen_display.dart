@@ -33,41 +33,49 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
 
   // Load the model
   loadModel() async {
-    interpreter = await Interpreter.fromAsset('assets/diabetes_model.tflite');
+    try {
+      interpreter = await Interpreter.fromAsset('assets/diabetes_model.tflite');
+      print("Model loaded successfully.");
+    } catch (e) {
+      print("Error loading model: $e");
+    }
   }
 
   performPrediction() async {
+    // Parse inputs
     double age = double.tryParse(ageController.text) ?? 0.0;
     double bmi = double.tryParse(bmiController.text) ?? 0.0;
     double hba1c = double.tryParse(hba1cController.text) ?? 0.0;
     double glucose = double.tryParse(glucoseController.text) ?? 0.0;
 
-    String heartdisease = controller.selectedDisease
-        .value;
-    String gender = controller.selectedGender
-        .value;
-    String hypertension = controller.selectedTension
-        .value;
-    String smokingHistory = controller.selectedSmoking
-        .value;
+    // Retrieve dropdown values
+    String heartdisease = controller.selectedDisease.value;
+    String gender = controller.selectedGender.value;
+    String hypertension = controller.selectedTension.value;
+    String smokingHistory = controller.selectedSmoking.value;
 
     // Convert dropdown values to numeric encoding
-    int genderValue = hypertension == 'Yes' ? 1 : 0;
+    int genderValue = gender == 'Male' ? 1 : 0;
     int hypertensionValue = hypertension == 'Yes' ? 1 : 0;
     int heartdiseaseValue = heartdisease == 'Yes' ? 1 : 0;
-    int smokingHistoryValue;
-    if (smokingHistory == 'Never') {
-      smokingHistoryValue = 0;
-    } else if (smokingHistory == 'No Info') {
-      smokingHistoryValue = 1;
-    } else {
-      smokingHistoryValue = 2; // 'Current'
-    }
+    int smokingHistoryValue = smokingHistory == 'Never'
+        ? 0
+        : (smokingHistory == 'No Info' ? 1 : 2); // 'Current'
 
-    // Ensure no null values are passed
+    // Debugging: Print raw values
+    print("Age: $age");
+    print("BMI: $bmi");
+    print("HBA1C: $hba1c");
+    print("Glucose: $glucose");
+    print("Gender: $gender -> $genderValue");
+    print("Hypertension: $hypertension -> $hypertensionValue");
+    print("Heart Disease: $heartdisease -> $heartdiseaseValue");
+    print("Smoking History: $smokingHistory -> $smokingHistoryValue");
+
+    // Validate inputs
     if (age == 0.0 || bmi == 0.0 || hba1c == 0.0 || glucose == 0.0 ||
         hypertension.isEmpty || smokingHistory.isEmpty || heartdisease.isEmpty || gender.isEmpty) {
-      // You can show an error message if any field is empty or invalid
+      print("Error: Some input values are missing or invalid.");
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -88,7 +96,7 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
       return;
     }
 
-    // Prepare the input for the model
+    // Prepare input for the model
     var input = [
       [
         genderValue.toDouble(),
@@ -102,19 +110,24 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
       ]
     ];
 
+    // Debugging: Print input array
+    print("Input to model: $input");
+
     // Prepare output tensor
     var output = List.filled(1, 0).reshape([1, 1]);
 
     // Run the model
     try {
       interpreter.run(input, output);
+      print("Output from model: $output");
     } catch (e) {
       print('Error running the model: $e');
       return;
     }
 
-    // Get the prediction result (0 or 1)
+    // Get the prediction result
     var prediction = output[0][0];
+    print("Prediction result: $prediction");
 
     // Show the result in an AlertDialog
     _showSubmitDialog(context, prediction);
@@ -126,7 +139,7 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
       borderRadius: BorderRadius.circular(12),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.1), // Shadow color
+          color: Colors.black.withOpacity(0.1),
           blurRadius: 6,
           offset: Offset(0, 3),
         ),
@@ -144,11 +157,7 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
         backgroundColor: Color.fromARGB(255, 10, 63, 94),
         title: Text(
           'Diabetes Prediction',
-          style: Theme
-              .of(context)
-              .textTheme
-              .headlineSmall
-              ?.copyWith(color: AppColors.background),
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: AppColors.background),
         ),
       ),
       body: Container(
@@ -171,253 +180,22 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Gender Dropdown
-                  Text('Gender', style: Theme
-                      .of(context)
-                      .textTheme
-                      .titleMedium
-                      ?.copyWith(color: AppColors.background)),
-                  SizedBox(height: 8),
-                  Obx(() =>
-                      Container(
-                        decoration: inputBoxShadow,
-                        child: DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                          dropdownColor: Colors.black,
-                          items: ['Male', 'Female']
-                              .map((gender) =>
-                              DropdownMenuItem(
-                                value: gender,
-                                child: Text(gender,
-                                    style: TextStyle(color: Colors.white)),
-                              ))
-                              .toList(),
-                          value: controller.selectedGender.value.isEmpty
-                              ? null
-                              : controller.selectedGender.value,
-                          onChanged: (value) {
-                            controller.selectedGender.value = value!;
-                          },
-                        ),
-                      )),
+                  buildDropdown('Gender', ['Male', 'Female'], controller.selectedGender),
                   SizedBox(height: 20),
-
-                  // Age Field
-                  Text('Age', style: Theme
-                      .of(context)
-                      .textTheme
-                      .titleMedium
-                      ?.copyWith(color: AppColors.background)),
-                  Container(
-                    decoration: inputBoxShadow,
-                    child: TextFormField(
-                      style: TextStyle(color: AppColors.background),
-                      controller: ageController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter age';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
+                  buildTextField('Age', ageController),
                   SizedBox(height: 20),
-
-                  // Hypertension Dropdown
-                  Text('Hypertension', style: Theme
-                      .of(context)
-                      .textTheme
-                      .titleMedium
-                      ?.copyWith(color: AppColors.background)),
-                  SizedBox(height: 8),
-                  Obx(() =>
-                      Container(
-                        decoration: inputBoxShadow,
-                        child: DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                          dropdownColor: Colors.black,
-                          items: ['Yes', 'No']
-                              .map((tension) =>
-                              DropdownMenuItem(
-                                value: tension,
-                                child: Text(tension,
-                                    style: TextStyle(color: Colors.white)),
-                              ))
-                              .toList(),
-                          value: controller.selectedTension.value.isEmpty
-                              ? null
-                              : controller.selectedTension.value,
-                          onChanged: (value) {
-                            controller.selectedTension.value = value!;
-                          },
-                        ),
-                      )),
+                  buildDropdown('Hypertension', ['Yes', 'No'], controller.selectedTension),
                   SizedBox(height: 20),
-
-                  Text('Heart disease', style: Theme
-                      .of(context)
-                      .textTheme
-                      .titleMedium
-                      ?.copyWith(color: AppColors.background)),
-                  SizedBox(height: 8),
-                  Obx(() =>
-                      Container(
-                        decoration: inputBoxShadow,
-                        child: DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                          dropdownColor: Colors.black,
-                          items: ['Yes', 'No']
-                              .map((disease) =>
-                              DropdownMenuItem(
-                                value: disease,
-                                child: Text(disease,
-                                    style: TextStyle(color: Colors.white)),
-                              ))
-                              .toList(),
-                          value: controller.selectedDisease.value.isEmpty
-                              ? null
-                              : controller.selectedDisease.value,
-                          onChanged: (value) {
-                            controller.selectedDisease.value = value!;
-                          },
-                        ),
-                      )),
+                  buildDropdown('Heart disease', ['Yes', 'No'], controller.selectedDisease),
                   SizedBox(height: 20),
-
-
-                  // Smoking History Dropdown
-                  Text('Smoking History', style: Theme
-                      .of(context)
-                      .textTheme
-                      .titleMedium
-                      ?.copyWith(color: AppColors.background)),
-                  SizedBox(height: 8),
-                  Obx(() =>
-                      Container(
-                        decoration: inputBoxShadow,
-                        child: DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                          dropdownColor: Colors.black,
-                          items: ['Never', 'No Info', 'Current']
-                              .map((smoking) =>
-                              DropdownMenuItem(
-                                value: smoking,
-                                child: Text(smoking,
-                                    style: TextStyle(color: Colors.white)),
-                              ))
-                              .toList(),
-                          value: controller.selectedSmoking.value.isEmpty
-                              ? null
-                              : controller.selectedSmoking.value,
-                          onChanged: (value) {
-                            controller.selectedSmoking.value = value!;
-                          },
-                        ),
-                      )),
+                  buildDropdown('Smoking History', ['Never', 'No Info', 'Current'], controller.selectedSmoking),
                   SizedBox(height: 20),
-
-                  // BMI Field
-                  Text('BMI', style: Theme
-                      .of(context)
-                      .textTheme
-                      .titleMedium
-                      ?.copyWith(color: AppColors.background)),
-                  Container(
-                    decoration: inputBoxShadow,
-                    child: TextFormField(
-                      style: TextStyle(color: AppColors.background),
-                      controller: bmiController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter BMI';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
+                  buildTextField('BMI', bmiController),
                   SizedBox(height: 20),
-
-                  // HBA1C Field
-                  Text('HBA1C', style: Theme
-                      .of(context)
-                      .textTheme
-                      .titleMedium
-                      ?.copyWith(color: AppColors.background)),
-                  Container(
-                    decoration: inputBoxShadow,
-                    child: TextFormField(
-                      style: TextStyle(color: AppColors.background),
-                      controller: hba1cController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter HBA1C';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
+                  buildTextField('HBA1C', hba1cController),
                   SizedBox(height: 20),
-
-                  // Blood Glucose Level Field
-                  Text('Blood Glucose Level', style: Theme
-                      .of(context)
-                      .textTheme
-                      .titleMedium
-                      ?.copyWith(color: AppColors.background)),
-                  Container(
-                    decoration: inputBoxShadow,
-                    child: TextFormField(
-                      style: TextStyle(color: AppColors.background),
-                      controller: glucoseController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter glucose level';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
+                  buildTextField('Blood Glucose Level', glucoseController),
                   SizedBox(height: 20),
-
                   SizedBox(
                     height: 50,
                     width: double.infinity,
@@ -435,8 +213,7 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
                       ),
                       child: Text(
                         'Submit',
-                        style: GoogleFonts.openSans(color: AppColors.background,
-                            fontSize: 18),
+                        style: GoogleFonts.openSans(color: AppColors.background, fontSize: 18),
                       ),
                     ),
                   ),
@@ -449,6 +226,66 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
     );
   }
 
+  Widget buildTextField(String label, TextEditingController controller) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.background)),
+        SizedBox(height: 8),
+        TextFormField(
+          style: TextStyle(color: AppColors.background),
+          controller: controller,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'Please enter $label';
+            }
+            return null;
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget buildDropdown(String label, List<String> items, RxString selectedValue) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.background)),
+        SizedBox(height: 8),
+        Obx(() => Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white.withOpacity(0.1),
+          ),
+          child: DropdownButtonFormField<String>(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+            dropdownColor: Colors.black,
+            items: items.map((item) {
+              return DropdownMenuItem(
+                value: item,
+                child: Text(item, style: TextStyle(color: Colors.white)),
+              );
+            }).toList(),
+            value: selectedValue.value.isEmpty ? null : selectedValue.value,
+            onChanged: (value) {
+              selectedValue.value = value!;
+            },
+          ),
+        )),
+      ],
+    );
+  }
+
   bool isFormValid() {
     return ageController.text.isNotEmpty &&
         bmiController.text.isNotEmpty &&
@@ -457,15 +294,11 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
         controller.selectedGender.value.isNotEmpty &&
         controller.selectedTension.value.isNotEmpty &&
         controller.selectedSmoking.value.isNotEmpty &&
-        controller.selectedDisease.value.isNotEmpty ;
-
+        controller.selectedDisease.value.isNotEmpty;
   }
 
-
   void _showSubmitDialog(BuildContext context, var prediction) {
-    String result = prediction > 0.5
-        ? "Positive"
-        : "Negative";
+    String result = prediction > 0.5 ? "Positive" : "Negative";
 
     showDialog(
       context: context,
@@ -476,7 +309,7 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Get.back(); // Close the dialog
+                Get.back();
               },
               child: Text('OK'),
             ),
