@@ -2,7 +2,9 @@ import 'package:dia_assist/themes/colors_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/home_controller.dart';
+import '../prediction_page/medication_page.dart';
 import '../prediction_page/prediction_screen_display.dart';
+import '../prediction_page/previously_record_data.dart';
 import 'about_screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -124,7 +126,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const MedicateScreen(),
+                                        builder: (context) => MedicateScreen(),
                                       ),
                                     );
                                     break;
@@ -133,7 +135,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                        const RecordedDataScreen(),
+                                        RecordedDataScreen(),
                                       ),
                                     );
                                     break;
@@ -166,38 +168,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class MedicateScreen extends StatelessWidget {
-  const MedicateScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dia-Medicate'),
-      ),
-      body: Center(
-        child: const Text('Medication functionality goes here'),
-      ),
-    );
-  }
-}
-
-class RecordedDataScreen extends StatelessWidget {
-  const RecordedDataScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Previously Recorded Data'),
-      ),
-      body: Center(
-        child: const Text('Recorded data functionality goes here'),
       ),
     );
   }
