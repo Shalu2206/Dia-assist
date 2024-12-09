@@ -1,27 +1,23 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import '../../controllers/login_controller.dart';
-import '../../models/prediction_entry.dart';
-import '../../shared_data/prediction_data_store.dart';
 import '../../themes/colors_theme.dart';
 
-class PredictionScreenDisplay extends StatefulWidget {
+class MedicateScreen extends StatefulWidget {
   @override
-  _PredictionScreenDisplayState createState() => _PredictionScreenDisplayState();
+  _MedicateScreenState createState() => _MedicateScreenState();
 }
 
-class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
+class _MedicateScreenState extends State<MedicateScreen> {
   final TextEditingController ageController = TextEditingController();
   final TextEditingController bmiController = TextEditingController();
   final TextEditingController hba1cController = TextEditingController();
   final TextEditingController glucoseController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String result = '';
+  String _result = '';
 
   late Interpreter interpreter;
 
@@ -127,23 +123,6 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
     String formattedPrediction = prediction.toStringAsFixed(8);
 
     double finalPrediction = double.tryParse(formattedPrediction) ?? 0.0;
-
-    DateTime timestamp = DateTime.now();
-
-    PredictionDataStore.entries.add(
-      PredictionEntry(
-        gender: gender,
-        hypertension: hypertension,
-        heartDisease: heartdisease,
-        smokingHistory: smokingHistory,
-        age: age,
-        bmi: bmi,
-        hba1c: hba1c,
-        glucose: glucose,
-        result: result,
-        timestamp: timestamp,
-      ),
-    );
 
     _showSubmitDialog(context, finalPrediction);
   }
@@ -468,14 +447,15 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
                       ),
                     ),
                   ),
-                  if (result.isNotEmpty)
+                  // Display result after prediction
+                  if (_result.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       child: Container(
                         width: double.infinity,
                         padding: EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Colors.white60,
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
@@ -488,7 +468,7 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
                         ),
                         child: Center(
                           child: Text(
-                            result,
+                            _result,
                             style: TextStyle(
                               color: AppColors.secondary,
                               fontSize: 25,
@@ -508,16 +488,19 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
   }
 
   void _showSubmitDialog(BuildContext context, var prediction) {
-    if (prediction > 0.21840573) {
+    String result;
+
+    if (prediction > 0.00012329) {
       result = "Positive 🙁";
-    } else if (prediction >= 0.09067127 && prediction <= 0.21840572) {
+    } else if (prediction > 0.00002576 && prediction <= 0.00012329) {
       result = "Pre-Diabetes 😐";
     } else {
       result = "Negative 😃";
     }
-print(prediction);
+    print(prediction);
+    print(result);
     setState(() {
-      result = result;
+      _result = result;
     });
   }
 
