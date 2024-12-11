@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import '../../controllers/login_controller.dart';
-import '../../models/prediction_entry.dart';
-import '../../shared_data/prediction_data_store.dart';
 import '../../themes/colors_theme.dart';
 
 class PredictionScreenDisplay extends StatefulWidget {
@@ -21,10 +19,10 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
   final TextEditingController glucoseController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String result = '';
 
   late Interpreter interpreter;
 
+  // Initialize the LoginController with Get.find()
   final LoginController controller = Get.find<LoginController>();
 
   @override
@@ -33,21 +31,7 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
     loadModel();
   }
 
-  @override
-  void dispose() {
-    ageController.dispose();
-    bmiController.dispose();
-    hba1cController.dispose();
-    glucoseController.dispose();
-
-    controller.selectedGender.value = '';
-    controller.selectedTension.value = '';
-    controller.selectedDisease.value = '';
-    controller.selectedSmoking.value = '';
-
-    super.dispose();
-  }
-
+  // Load the model
   loadModel() async {
     interpreter = await Interpreter.fromAsset('assets/diabetes_model.tflite');
   }
@@ -58,28 +42,32 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
     double hba1c = double.tryParse(hba1cController.text) ?? 0.0;
     double glucose = double.tryParse(glucoseController.text) ?? 0.0;
 
-    String heartdisease = controller.selectedDisease.value;
-    String gender = controller.selectedGender.value;
-    String hypertension = controller.selectedTension.value;
-    String smokingHistory = controller.selectedSmoking.value;
+    String heartdisease = controller.selectedDisease
+        .value;
+    String gender = controller.selectedGender
+        .value;
+    String hypertension = controller.selectedTension
+        .value;
+    String smokingHistory = controller.selectedSmoking
+        .value;
 
     // Convert dropdown values to numeric encoding
-    int genderValue = gender == 'Male' ? 0 : 1; // Male=0, Female=1
-    int hypertensionValue = hypertension == 'Yes' ? 1 : 0; // Yes=1, No=0
-    int heartdiseaseValue = heartdisease == 'Yes' ? 1 : 0; // Yes=1, No=0
+    int genderValue = hypertension == 'Yes' ? 1 : 0;
+    int hypertensionValue = hypertension == 'Yes' ? 1 : 0;
+    int heartdiseaseValue = heartdisease == 'Yes' ? 1 : 0;
     int smokingHistoryValue;
     if (smokingHistory == 'Never') {
-      smokingHistoryValue = 0; // Never=0
+      smokingHistoryValue = 0;
     } else if (smokingHistory == 'No Info') {
-      smokingHistoryValue = 1; // No Info=1
+      smokingHistoryValue = 1;
     } else {
-      smokingHistoryValue = 2; // Current=2
+      smokingHistoryValue = 2; // 'Current'
     }
 
     // Ensure no null values are passed
     if (age == 0.0 || bmi == 0.0 || hba1c == 0.0 || glucose == 0.0 ||
-        hypertension.isEmpty || smokingHistory.isEmpty ||
-        heartdisease.isEmpty || gender.isEmpty) {
+        hypertension.isEmpty || smokingHistory.isEmpty || heartdisease.isEmpty || gender.isEmpty) {
+      // You can show an error message if any field is empty or invalid
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -114,6 +102,7 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
       ]
     ];
 
+    // Prepare output tensor
     var output = List.filled(1, 0).reshape([1, 1]);
 
     // Run the model
@@ -123,38 +112,23 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
       print('Error running the model: $e');
       return;
     }
+
+    // Get the prediction result (0 or 1)
     var prediction = output[0][0];
-    String formattedPrediction = prediction.toStringAsFixed(8);
 
-    double finalPrediction = double.tryParse(formattedPrediction) ?? 0.0;
-
-    DateTime timestamp = DateTime.now();
-
-    PredictionDataStore.entries.add(
-      PredictionEntry(
-        gender: gender,
-        hypertension: hypertension,
-        heartDisease: heartdisease,
-        smokingHistory: smokingHistory,
-        age: age,
-        bmi: bmi,
-        hba1c: hba1c,
-        glucose: glucose,
-        result: result,
-        timestamp: timestamp,
-      ),
-    );
-
-    _showSubmitDialog(context, finalPrediction);
+    // Show the result in an AlertDialog
+    _showSubmitDialog(context, prediction);
   }
 
   @override
   Widget build(BuildContext context) {
     BoxDecoration inputBoxShadow = BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(12),
       boxShadow: [
         BoxShadow(
-          color: Colors.white60,
+          color: Colors.black.withOpacity(0.1), // Shadow color
+          blurRadius: 6,
+          offset: Offset(0, 3),
         ),
       ],
     );
@@ -212,14 +186,13 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                          dropdownColor: AppColors.background,
+                          dropdownColor: Colors.black,
                           items: ['Male', 'Female']
                               .map((gender) =>
                               DropdownMenuItem(
                                 value: gender,
                                 child: Text(gender,
-                                    style: TextStyle(
-                                        color: AppColors.secondary)),
+                                    style: TextStyle(color: Colors.white)),
                               ))
                               .toList(),
                           value: controller.selectedGender.value.isEmpty
@@ -241,7 +214,7 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
                   Container(
                     decoration: inputBoxShadow,
                     child: TextFormField(
-                      style: TextStyle(color: AppColors.secondary),
+                      style: TextStyle(color: AppColors.background),
                       controller: ageController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
@@ -275,14 +248,13 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                          dropdownColor: AppColors.background,
+                          dropdownColor: Colors.black,
                           items: ['Yes', 'No']
                               .map((tension) =>
                               DropdownMenuItem(
                                 value: tension,
                                 child: Text(tension,
-                                    style: TextStyle(
-                                        color: AppColors.secondary)),
+                                    style: TextStyle(color: Colors.white)),
                               ))
                               .toList(),
                           value: controller.selectedTension.value.isEmpty
@@ -310,14 +282,13 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                          dropdownColor: AppColors.background,
+                          dropdownColor: Colors.black,
                           items: ['Yes', 'No']
                               .map((disease) =>
                               DropdownMenuItem(
                                 value: disease,
                                 child: Text(disease,
-                                    style: TextStyle(
-                                        color: AppColors.secondary)),
+                                    style: TextStyle(color: Colors.white)),
                               ))
                               .toList(),
                           value: controller.selectedDisease.value.isEmpty
@@ -347,14 +318,13 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                          dropdownColor: AppColors.background,
+                          dropdownColor: Colors.black,
                           items: ['Never', 'No Info', 'Current']
                               .map((smoking) =>
                               DropdownMenuItem(
                                 value: smoking,
                                 child: Text(smoking,
-                                    style: TextStyle(
-                                        color: AppColors.secondary)),
+                                    style: TextStyle(color: Colors.white)),
                               ))
                               .toList(),
                           value: controller.selectedSmoking.value.isEmpty
@@ -376,7 +346,7 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
                   Container(
                     decoration: inputBoxShadow,
                     child: TextFormField(
-                      style: TextStyle(color: AppColors.secondary),
+                      style: TextStyle(color: AppColors.background),
                       controller: bmiController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
@@ -403,7 +373,7 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
                   Container(
                     decoration: inputBoxShadow,
                     child: TextFormField(
-                      style: TextStyle(color: AppColors.secondary),
+                      style: TextStyle(color: AppColors.background),
                       controller: hba1cController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
@@ -430,7 +400,7 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
                   Container(
                     decoration: inputBoxShadow,
                     child: TextFormField(
-                      style: TextStyle(color: AppColors.secondary),
+                      style: TextStyle(color: AppColors.background),
                       controller: glucoseController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
@@ -459,7 +429,9 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 10,
-                        backgroundColor: Color.fromARGB(255, 10, 63, 94),
+                        backgroundColor: isFormValid()
+                            ? Colors.grey
+                            : Color.fromARGB(255, 10, 63, 94),
                       ),
                       child: Text(
                         'Submit',
@@ -468,36 +440,6 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
                       ),
                     ),
                   ),
-                  if (result.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            result,
-                            style: TextStyle(
-                              color: AppColors.secondary,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
                 ],
               ),
             ),
@@ -505,20 +447,6 @@ class _PredictionScreenDisplayState extends State<PredictionScreenDisplay> {
         ),
       ),
     );
-  }
-
-  void _showSubmitDialog(BuildContext context, var prediction) {
-    if (prediction > 0.21840573) {
-      result = "Positive 🙁";
-    } else if (prediction >= 0.09067127 && prediction <= 0.21840572) {
-      result = "Pre-Diabetes 😐";
-    } else {
-      result = "Negative 😃";
-    }
-print(prediction);
-    setState(() {
-      result = result;
-    });
   }
 
   bool isFormValid() {
@@ -529,6 +457,32 @@ print(prediction);
         controller.selectedGender.value.isNotEmpty &&
         controller.selectedTension.value.isNotEmpty &&
         controller.selectedSmoking.value.isNotEmpty &&
-        controller.selectedDisease.value.isNotEmpty;
+        controller.selectedDisease.value.isNotEmpty ;
+
+  }
+
+
+  void _showSubmitDialog(BuildContext context, var prediction) {
+    String result = prediction > 0.5
+        ? "Positive"
+        : "Negative";
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Prediction Result'),
+          content: Text('Your diabetes prediction is: $result'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Get.back(); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
