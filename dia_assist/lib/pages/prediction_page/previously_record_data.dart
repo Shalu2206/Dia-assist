@@ -21,43 +21,45 @@ class RecordedDataScreen extends StatelessWidget {
           },
         ),
       ),
-      body:Container(
-          decoration:const  BoxDecoration(
-          gradient: LinearGradient(
-          colors: [
-          Color.fromARGB(255, 10, 63, 94),
-          Color.fromARGB(255, 126, 202, 225),
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          ),
-          ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: groupedByDate.keys.map((date) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text(
-                      _formatDate(date),
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: AppColors.background),
+      body: Container(
+          width: double.infinity,
+            height:double.infinity,
+            decoration:const  BoxDecoration(
+            gradient: LinearGradient(
+             colors: [
+            Color.fromARGB(255, 10, 63, 94),
+            Color.fromARGB(255, 126, 202, 225),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            ),
+            ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: groupedByDate.keys.map((date) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text(
+                        _formatDate(date),
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: AppColors.background),
+                      ),
                     ),
-                  ),
-                  ...groupedByDate[date]!.map((entry) {
-                    return _buildPredictionCard(entry);
-                  }).toList(),
-                ],
-              );
-            }).toList(),
+                    ...groupedByDate[date]!.map((entry) {
+                      return _buildPredictionCard(entry);
+                    }).toList(),
+                  ],
+                );
+              }).toList(),
+            ),
           ),
         ),
-      ),
-      )
+        ),
     );
   }
 
