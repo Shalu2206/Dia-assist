@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6a68e786-fb03-44d3-8daa-7d9d381bb8b1" name="Changes" comment="">
+<<<<<<< Updated upstream
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dia_assist/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dia_assist/lib/pages/about_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/lib/pages/home/about_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dia_assist/lib/pages/home_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/lib/pages/home/home_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dia_assist/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dia_assist/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dia_assist/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dia_assist/test/widget_test.dart" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> Stashed changes
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="shal" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2pnl9pkITit6BJoDVJWEs0aoHBi" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Flutter.main.dart.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "dart.analysis.tool.window.visible": "false",
+<<<<<<< Updated upstream
+    "git-widget-placeholder": "ashok",
+=======
+    "git-widget-placeholder": "shal",
+>>>>>>> Stashed changes
+    "io.flutter.reload.alreadyRun": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Dell1/Documents/GitHub/Dia-assist/dia_assist/assets/images",
+    "settings.editor.selected.configurable": "flutter.settings",
+    "show.migrate.to.gradle.popup": "false"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Dell1\Documents\GitHub\Dia-assist\dia_assist\assets\images" />
+      <recent name="C:\Users\Dell1\Documents\GitHub\Dia-assist\dia_assist\assets" />
+      <recent name="C:\Users\Dell1\Documents\GitHub\Dia-assist\dia_assist\lib\themes" />
+      <recent name="C:\Users\Dell1\Documents\GitHub\Dia-assist" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Ashok acharya\Documents\GitHub\Dia-assist\dia_assist\lib" />
+      <recent name="C:\Users\Ashok acharya\Documents\GitHub\Dia-assist\dia_assist\lib\pages\home" />
+      <recent name="C:\Users\Ashok acharya\Documents\GitHub\Dia-assist\dia_assist\lib\controllers\home" />
+      <recent name="C:\Users\Ashok acharya\Documents\GitHub\Dia-assist\dia_assist\lib\pages" />
+      <recent name="C:\Users\Ashok acharya\Documents\GitHub\Dia-assist\dia_assist\lib\controllers" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/dia_assist/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Flutter.main.dart" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6a68e786-fb03-44d3-8daa-7d9d381bb8b1" name="Changes" comment="" />
+      <created>1733409571726</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1733409571726</updated>
+    </task>
+    <servers />
+  </component>
+</project>
